@@ -1,6 +1,6 @@
 import uuid
 
-from flask import Blueprint
+from flask import Blueprint, url_for
 
 blue = Blueprint('blue', __name__)
 
@@ -79,3 +79,16 @@ def testany(c):
 @blue.route('/testmethod/', methods=['post'])
 def testmethod():
     return '视图函数的请求方式'
+
+
+# 反向解析
+@blue.route('/index/')
+def index():
+    return 'index'
+
+
+@blue.route('/index1/')
+def index1():
+    a = url_for('blue.index')
+    print(a)
+    return 'index1'
