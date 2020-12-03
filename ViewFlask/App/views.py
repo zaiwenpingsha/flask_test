@@ -1,6 +1,6 @@
 import uuid
 
-from flask import Blueprint, url_for, request
+from flask import Blueprint, url_for, request, render_template, make_response, redirect, Response, abort
 
 blue = Blueprint('blue', __name__)
 
@@ -130,3 +130,76 @@ def testRequest():
     print(request.path)
 
     return 'testRequest'
+
+
+# ------------------------------------------
+# response
+#      （1）字符串
+#      （2）render_template
+#      （3）make_response
+#      （4）redirect
+#      （5）Response
+
+# 视图函数的返回值类型有2大类
+#           1  字符串
+#                   普通的字符串
+#                   render_template
+#           2  response
+#                   make_response
+#                   redirect
+#                   Response
+
+
+# 1）字符串
+@blue.route('/testResponse/')
+def testResponse():
+    return '上海'
+
+
+# 2）render_template
+@blue.route('/testResponse1/')
+def testResponse1():
+    a = render_template('testResponse1.html')
+    print(type(a))  # render_template方法返回的数据类型是字符串
+    return a
+
+
+# 3）make_response
+@blue.route('/testResponse2/')
+def testResponse2():
+    a = make_response('<h1>有点饿<h1/>')
+    print(type(a))  # <class 'flask.wrappers.Response'>
+    return a
+
+
+# 4) 重定向 redirect
+@blue.route('/a/')
+def a():
+    return '冬天来了'
+
+
+@blue.route('/testResponse3/')
+def testResponse3():
+    # return redirect('/a/')
+    return redirect(url_for('blue.a'))
+
+
+# 5) Response
+@blue.route('/testResponse4/')
+def testResponse4():
+    return Response('哈哈')
+
+
+# -----------------------
+# 异常
+@blue.route('/testAbort/')
+def testAbort():
+    a = 1
+    b = 2
+    if a < b:
+        abort(404)
+    return 'haha'
+
+@blue.errorhandler(404)
+def makehaha(exception):
+    return 'a不能小于b'
