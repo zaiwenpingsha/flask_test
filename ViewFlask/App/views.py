@@ -1,6 +1,6 @@
 import uuid
 
-from flask import Blueprint, url_for
+from flask import Blueprint, url_for, request
 
 blue = Blueprint('blue', __name__)
 
@@ -92,3 +92,41 @@ def index1():
     a = url_for('blue.index')
     print(a)
     return 'index1'
+
+
+# request
+@blue.route('/testRequest/', methods=['post', 'get'])
+def testRequest():
+    # method是获取请求方式
+    print(request.method)
+
+    # 获取的是一个全路径
+    print(request.url)
+    # 获取的是不带请求参数的url
+    print(request.base_url)
+    # 获取的是一个全路径
+    print(request.host_url)
+
+    # 获取请求的客户端ip  应用场景就是反扒
+    print(request.remote_addr)
+
+    # http://www.baidu.com/s?name=zs&age=18&sex=nv
+    # 获取get请求方式的参数
+    # ImmutableMultiDict([('age', '18'), ('name', "'zs'")])
+    print(request.args)
+    print(request.args.get('name'))
+
+    # 获取post请求方式的参数
+    # ImmutableMultiDict([('name', 'zs'), ('age', '18')])
+    print(request.form)
+    print(request.form.get('name'))
+
+    # request.file用户文件上传
+
+    # 获取的是请求头
+    print(request.headers)
+
+    # 获取的是请求资源路径
+    print(request.path)
+
+    return 'testRequest'
