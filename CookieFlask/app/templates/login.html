@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>登陆</title>
+</head>
+<body>
+    {# action是提交表单的执行路由的路径
+       method 是执行路由的时候的请求方式
+       name 是执行请求的时候 在视图函数中获取的时候需要的变量
+    #}
+    <form action="/login/" method="post">
+        <input type="text" name="name">
+        <input type="submit" value="提交">
+    </form>
+</body>
+</html>
